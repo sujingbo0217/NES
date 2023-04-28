@@ -16,9 +16,9 @@ make
 
 ### Playing:
 
-![running](https://github.com/sujb0217/TinyNES/blob/main/images/running.png)
+![running](./images/running.png)
 
-# Realization of NES's CPU Simulator with C++
+# Realization of NES CPU Simulator with C++
 
 ## DAY 01
 
@@ -110,7 +110,7 @@ MainBus Read a Byte: 2
 
 > 预留给游戏卡的地址空间是有限的，游戏卡的程序内存（Program Memory）被限制在 32 KB，角色内存（Character Memory）被限制在 8 KB。为了突破这种限制，人们发明了内存映射器（Mapper）。
 >
-> 内存映射器是游戏卡中的一个硬件，具有存储体空间切换（Bank Switching）的功能，以将新的程序或角色内存引入到可寻址的内存空间。程序可以通过向指向内存映射器的特定的地址写入数据来控制存储体空间的切换。  
+> 内存映射器是游戏卡中的一个硬件，具有存储体空间切换（Bank Switching）的功能，以将新的程序或角色内存引入到可寻址的内存空间。程序可以通过向指向内存映射器的特定的地址写入数据来控制存储体空间的切换。
 >
 > 不同的游戏卡实现了不同的存储体空间切换方案，所以会有十几种不同的内存映射器。既然模拟器要模拟 NES 的硬件，也就必须能够模拟游戏卡的 内存映射器。尽管如此，实际上 90% 的 FC 游戏使用的都是六种最常见的内存映射器中的一种。
 
@@ -168,8 +168,6 @@ make clean
 [1]    segmentation fault  ./run ./games/Super_mario_brothers.nes
 ```
 
-😅 Emmm...
-
 **Last test caused the segmentation fault !!!**
 So **DO NOT FORGET TO COMMENT THE PREVIOUS TEST CODE !!!**
 
@@ -179,9 +177,9 @@ MainBus.cpp:20:
 ```cpp
 // For Test
 if (addr >= 0x8000) {
-  const Data value = cartridge.getROM()[addr - 0x8000];
-  std::cout << "MainBus Read a Byte: " << std::hex << static_cast<int> (value) << std::endl;
-  return value;
+const Data value = cartridge.getROM()[addr - 0x8000];
+std::cout << "MainBus Read a Byte: " << std::hex << static_cast<int> (value) << std::endl;
+return value;
 }
 ```
 
@@ -190,7 +188,7 @@ and CPU.hpp:29
 ```cpp
 // OPEN THE API ONLY FOR TEST!
 Data get_acc() {
-  return r_acc;
+return r_acc;
 }
 ```
 
@@ -220,7 +218,7 @@ LDFLAGS = -L/usr/local/Cellar/sfml/2.5.1/lib -lsfml-graphics -lsfml-window -lsfm
 
 ### 2. PPU总线（Picture Bus）以及虚拟屏幕（Virtual Screen）的实现
 
-在使用 SFML 库创建一个 windows 后，内容的填充使用 VirtualScreen 类来实现。PictureBus 类似于我们之前实现的 MainBus，不过 PictureBus 是用来连接PPU（Picture Processing Unit,类比于现在的显卡）和 vdeio 相关的存储的。
+在使用 SFML 库创建一个 windows 后，内容的填充使用 VirtualScreen 类来实现。PictureBus 类似于我们之前实现的 MainBus，不过 PictureBus 是用来连接PPU（Picture Processing Unit,类比于现在的显卡）和 video 相关的存储的。
 
 ## DAY N
 
